@@ -1,13 +1,17 @@
 describe('Hacker Stories', () => {
   beforeEach(() => {
-    cy.visit('/')
-
-    cy.assertLoadingIsShownAndHidden()
-    cy.contains('More').should('be.visible')
+    cy.intercept(//codigo intercepta comando do Cypress que permite interceptar e modificar requisições de rede. a requisão do tipo get para esse end '**/search?query=React&page=0' 
+      'GET', //GET': O método HTTP da requisição que você deseja interceptar.
+      '**/search?query=React&page=0' // URL que foi interceptada. 
+    ).as('getStories')// chamamos a requisão de GetStories 
+    cy.visit('/')// visita o home page 
+    cy.wait('@getStories')//cy.wait utiliza para esperar a execução do teste "esperamos a visita acabar ""
+    //cy.assertLoadingIsShownAndHidden() // verifica que um elemento de loading ... é exibido e logo depois  não é exibo mais. 
+    //cy.contains('More').should('be.visible') // verifica que o botao more esta visivel 
   })
 
   it('shows the footer', () => {
-    cy.get('footer')
+    cy.get('footer') // cy.get seleciona o elemento que quer testar 
       .should('be.visible')
       .and('contain', 'Icons made by Freepik from www.flaticon.com')
   })
