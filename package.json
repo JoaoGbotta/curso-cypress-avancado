@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "npx standard",
     "lint:fix": "npx standard --fix",
-    "test": "cypress run",
+    "test": "cypress run --reporter nyan",
     "cy:open": "cypress open"
   },
   "standard": {
@@ -32,7 +32,8 @@
   "license": "MIT",
   "homepage": "https://github.com/wlsf82/curso-cypress-avancado#readme",
   "devDependencies": {
-    "faker": "^5.4.0",
+    "@faker-js/faker": "^9.0.3",
+    "cypress-localstorage-commands": "^2.2.6",
     "standardjs": "^1.0.0-alpha"
   },
   "dependencies": {
