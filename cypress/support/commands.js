@@ -14,3 +14,8 @@ Cypress.Commands.add('search', term => {
     .clear()
     .type(`${term}{enter}`)
 })
+
+
+Cypress.Commands.add('setBaseUrl', (url) => {
+  Cypress.config('baseUrl', url);
+});

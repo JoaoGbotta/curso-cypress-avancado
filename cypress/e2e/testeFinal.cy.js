@@ -1,45 +1,44 @@
-// cypress/integration/hackernewsSearch.spec.js
-
-describe('Hacker News Search, moking ', () => {
-  const term = 'cypress.io'
+describe('Hacker News Search, mocking', () => {
+  const term = 'cypress.io';
 
   beforeEach(() => {
+    // Defina a URL base desejada aqui
+    cy.setBaseUrl('https://hackernews-seven.vercel.app/');
+
     cy.intercept(
       '**/search?query=redux&page=0&hitsPerPage=100',
-      { fixture: 'empty'}
-    ).as('empty')
+      { fixture: 'empty' }
+    ).as('empty');
     cy.intercept(
       `**/search?query=${term}&page=0&hitsPerPage=100`,
-      { fixture: 'stories'}
-    ).as('stories')
+      { fixture: 'stories' }
+    ).as('stories');
 
-    cy.visit('/')
-    cy.wait('@empty')
-  })
+    cy.visit('/');
+    cy.wait('@empty');
+  });
 
-  //armazena corretamente os resultados em cache
-  it('armazena corretamente os resultados em cache', () => {
-    const { faker } = require('@faker-js/faker')
-    const randomWord = faker.word.sample()
-    let count = 0
+  it.only('armazena corretamente os resultados em cache', () => {
+    const { faker } = require('@faker-js/faker');
+    const randomWord = faker.word.sample();
+    let count = 0;
 
     cy.intercept(`**/search?query=${randomWord}**`, req => {
-      count +=1
-      //Cypress intercepta uma requisição de rede que a aplicação faz. O req.reply permite que você controle a resposta dessa requisição, retornando dados personalizados ou mockados no lugar da resposta real da API.
-      req.reply({fixture: 'empty'})//o interceptador de requisições para simular ou modificar a resposta de uma requisição HTTP durante um teste.
-    }).as('random')
+      count += 1;
+      req.reply({ fixture: 'empty' });
+    }).as('random');
 
     cy.search(randomWord).then(() => {
-      expect(count, `network calls to fetch ${randomWord}`).to.equal(1)
+      expect(count, `network calls to fetch ${randomWord}`).to.equal(1);
 
-      cy.wait('@random')
+      cy.wait('@random');
 
-      cy.search(term)
-      cy.wait('@stories')
+      cy.search(term);
+      cy.wait('@stories');
 
       cy.search(randomWord).then(() => {
-        expect(count, `network calls to fetch ${randomWord}`).to.equal(1)
-      })
-    })
-  })
-})
+        expect(count, `network calls to fetch ${randomWord}`).to.equal(1);
+      });
+    });
+  });
+});

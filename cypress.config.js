@@ -7,7 +7,7 @@ module.exports = defineConfig({
     setupNodeEvents (on, config) {
       return require('./cypress/plugins/index.js')(on, config)
     },
-    baseUrl: 'https://hackernews-seven.vercel.app/'
+     baseUrl: process.env.CYPRESS_BASE_URL || 'https://wlsf82-hacker-stories.web.app'
   },
 
   component: {

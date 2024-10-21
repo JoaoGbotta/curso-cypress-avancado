@@ -243,7 +243,7 @@ describe('Hacker Stories', () => {
         cy.intercept(
           'GET',
         `**/search?query=${initialTerm}&page=0`,
-        { fixture: 'emtpy' }// fixture sempre dentro dos contextos.
+        { fixture: 'empty' }// fixture sempre dentro dos contextos.
         ).as('getEmtpyStories')
         // interceptando requisição da busca
         cy.intercept(
@@ -316,7 +316,7 @@ describe('Hacker Stories', () => {
         cy.intercept(
           'GET',
           '**/search**', // Como vimos que ele esta usando palavrar aleatorias , usamos '**/search**' para qualquer busca que ele fizer, " Busca aleatoria"
-          { fixture: 'emtpy' } // com as fixture sem usar uma api real o teste demora mais . agora usando as fixture, o texto roda mais rapido.
+          { fixture: 'empty' } // com as fixture sem usar uma api real o teste demora mais . agora usando as fixture, o texto roda mais rapido.
         ).as('getRandomStories') // Demos um alias para interceptar a requisição
 
         Cypress._.times(6, () => {
